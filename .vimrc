@@ -260,6 +260,8 @@
     map <C-K> <C-W>k<C-W>_
     map <C-L> <C-W>l<C-W>_
     map <C-H> <C-W>h<C-W>_
+    "Use F5 to maximize current window without closing other windows
+    map <F5> <C-W>_<C-W><Bar>
 
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
@@ -268,8 +270,8 @@
     " The following two lines conflict with moving to top and bottom of the
     " screen
     " If you prefer that functionality, comment them out.
-    "map <S-H> gT
-    "map <S-L> gt
+    map <S-H> gT
+    map <S-L> gt
     " Stupid shift key fixes
     cmap W w
     cmap WQ wq
