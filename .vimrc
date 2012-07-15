@@ -65,6 +65,7 @@
 
     " General
         if count(g:spf13_bundle_groups, 'general')
+            Bundle 'scrooloose/nerdtree'
             Bundle 'altercation/vim-colors-solarized'
             Bundle 'spf13/vim-colors'
             Bundle 'tpope/vim-surround'
@@ -73,16 +74,16 @@
             Bundle 'vim-scripts/sessionman.vim'
             Bundle 'matchit.zip'
             Bundle 'Lokaltog/vim-powerline'
+            Bundle 'Lokaltog/vim-easymotion'
             Bundle 'godlygeek/csapprox'
+            Bundle 'jistr/vim-nerdtree-tabs'
             Bundle 'flazz/vim-colorschemes'
             Bundle 'corntrace/bufexplorer'
-            Bundle 'scrooloose/nerdtree'
         endif
 
     " General Programming
         if count(g:spf13_bundle_groups, 'programming')
             " Pick one of the checksyntax, jslint, or syntastic
-            Bundle 'Shougo/neocomplcache'
             Bundle 'scrooloose/syntastic'
             Bundle 'garbas/vim-snipmate'
             Bundle 'spf13/snipmate-snippets'
@@ -97,6 +98,7 @@
             if executable('ctags')
                 Bundle 'majutsushi/tagbar'
             endif
+            Bundle 'Shougo/neocomplcache'
         endif
 
     " Python
@@ -221,7 +223,7 @@
     set whichwrap=b,s,h,l,<,>,[,]   " backspace and cursor keys wrap to
     set scrolljump=5                " lines to scroll when cursor leaves screen
     set scrolloff=3                 " minimum lines to keep above and below cursor
-    set foldenable                  " auto fold code
+    set nofoldenable                  " auto fold code
     set list
     set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
     
@@ -263,6 +265,11 @@
     nnoremap j gj
     nnoremap k gk
 
+    " The following two lines conflict with moving to top and bottom of the
+    " screen
+    " If you prefer that functionality, comment them out.
+    "map <S-H> gT
+    "map <S-L> gt
     " Stupid shift key fixes
     cmap W w
     cmap WQ wq
@@ -369,6 +376,19 @@
     " SnipMate {
         " Setting the author var
         " If forking, please overwrite in your .vimrc.local file
+    " }
+
+    " NerdTree {
+        map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+        map <leader>e :NERDTreeFind<CR>
+        nmap <leader>nt :NERDTreeFind<CR>
+
+        let NERDTreeShowBookmarks=1
+        let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
+        let NERDTreeChDirMode=0
+        let NERDTreeQuitOnOpen=1
+        let NERDTreeShowHidden=1
+        let NERDTreeKeepTreeInNewTab=1
     " }
 
     "Tabularize {
@@ -564,6 +584,18 @@ function! InitializeDirectories()
 endfunction
 call InitializeDirectories()
 
+function! NERDTreeInitAsNeeded()
+    redir => bufoutput
+    buffers!
+    redir END
+    let idx = stridx(bufoutput, "NERD_tree")
+    if idx > -1
+        NERDTreeMirror
+        NERDTreeFind
+        wincmd l
+    endif
+endfunction
+" }
 
 " Use local vimrc if available {
     if filereadable(expand("~/.vimrc.local"))
