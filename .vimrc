@@ -55,7 +55,7 @@
     " In your .vimrc.bundles.local file"
     " list only the plugin groups you will use
     if !exists('g:spf13_bundle_groups')
-        let g:spf13_bundle_groups=['general', 'programming', 'php', 'ruby', 'python', 'javascript', 'html', 'misc']
+        let g:spf13_bundle_groups=['general', 'programming', 'ruby', 'python', 'javascript', 'html', 'misc']
     endif
 
     " To override all the included bundles, put
@@ -65,7 +65,6 @@
 
     " General
         if count(g:spf13_bundle_groups, 'general')
-            Bundle 'scrooloose/nerdtree'
             Bundle 'altercation/vim-colors-solarized'
             Bundle 'spf13/vim-colors'
             Bundle 'tpope/vim-surround'
@@ -74,16 +73,16 @@
             Bundle 'vim-scripts/sessionman.vim'
             Bundle 'matchit.zip'
             Bundle 'Lokaltog/vim-powerline'
-            Bundle 'Lokaltog/vim-easymotion'
             Bundle 'godlygeek/csapprox'
-            Bundle 'jistr/vim-nerdtree-tabs'
             Bundle 'flazz/vim-colorschemes'
             Bundle 'corntrace/bufexplorer'
+            Bundle 'scrooloose/nerdtree'
         endif
 
     " General Programming
         if count(g:spf13_bundle_groups, 'programming')
             " Pick one of the checksyntax, jslint, or syntastic
+            Bundle 'Shougo/neocomplcache'
             Bundle 'scrooloose/syntastic'
             Bundle 'garbas/vim-snipmate'
             Bundle 'spf13/snipmate-snippets'
@@ -98,12 +97,6 @@
             if executable('ctags')
                 Bundle 'majutsushi/tagbar'
             endif
-            Bundle 'Shougo/neocomplcache'
-        endif
-
-    " PHP
-        if count(g:spf13_bundle_groups, 'php')
-            Bundle 'spf13/PIV'
         endif
 
     " Python
@@ -162,6 +155,9 @@
     set history=1000                " Store a ton of history (default is 20)
     set spell                       " spell checking on
     set hidden                      " allow buffer switching without saving
+    set title                       " change the terminal's title
+    "set visualbell                  " don't beep
+    set noerrorbells                " don't beep
 
     " Setting up the directories {
         set backup                      " backups are nice ...
@@ -188,6 +184,8 @@
     set showmode                    " display the current mode
 
     set cursorline                  " highlight current line
+
+    color molokai
 
     if has('cmdline_info')
         set ruler                   " show the ruler
@@ -217,6 +215,7 @@
     set winminheight=0              " windows can be 0 line high
     set ignorecase                  " case insensitive search
     set smartcase                   " case sensitive when uc present
+    set smarttab                    " insert tabs on the start of a line according to shiftwidth, not tabstop
     set wildmenu                    " show list instead of just completing
     set wildmode=list:longest,full  " command <Tab> completion, list matches, then longest common part, then all.
     set whichwrap=b,s,h,l,<,>,[,]   " backspace and cursor keys wrap to
@@ -225,7 +224,9 @@
     set foldenable                  " auto fold code
     set list
     set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
-
+    
+    set timeout timeoutlen=1000 ttimeoutlen=100 "Timeout setting for the slight delay between Esc key and mode switch
+    
 
 " }
 
@@ -261,12 +262,6 @@
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
-
-    " The following two lines conflict with moving to top and bottom of the
-    " screen
-    " If you prefer that functionality, comment them out.
-    map <S-H> gT
-    map <S-L> gt
 
     " Stupid shift key fixes
     cmap W w
@@ -326,14 +321,10 @@
     " Easier horizontal scrolling
     map zl zL
     map zh zH
+
 " }
 
 " Plugins {
-
-    " PIV {
-        let g:DisableAutoPHPFolding = 0
-        let g:PIVAutoClose = 0
-    " }
 
     " Misc {
         let g:NERDShutUp=1
@@ -378,23 +369,9 @@
     " SnipMate {
         " Setting the author var
         " If forking, please overwrite in your .vimrc.local file
-        let g:snips_author = 'Steve Francia <steve.francia@gmail.com>'
     " }
 
-    " NerdTree {
-        map <C-e> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
-        map <leader>e :NERDTreeFind<CR>
-        nmap <leader>nt :NERDTreeFind<CR>
-
-        let NERDTreeShowBookmarks=1
-        let NERDTreeIgnore=['\.pyc', '\~$', '\.swo$', '\.swp$', '\.git', '\.hg', '\.svn', '\.bzr']
-        let NERDTreeChDirMode=0
-        let NERDTreeQuitOnOpen=1
-        let NERDTreeShowHidden=1
-        let NERDTreeKeepTreeInNewTab=1
-    " }
-
-    " Tabularize {
+    "Tabularize {
         if exists(":Tabularize")
           nmap <Leader>a= :Tabularize /=<CR>
           vmap <Leader>a= :Tabularize /=<CR>
@@ -484,7 +461,7 @@
         let g:neocomplcache_enable_auto_select = 0
 
         " SuperTab like snippets behavior.
-        imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+        "imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
         " Plugin key-mappings.
         imap <C-k>     <Plug>(neocomplcache_snippets_expand)
@@ -587,18 +564,6 @@ function! InitializeDirectories()
 endfunction
 call InitializeDirectories()
 
-function! NERDTreeInitAsNeeded()
-    redir => bufoutput
-    buffers!
-    redir END
-    let idx = stridx(bufoutput, "NERD_tree")
-    if idx > -1
-        NERDTreeMirror
-        NERDTreeFind
-        wincmd l
-    endif
-endfunction
-" }
 
 " Use local vimrc if available {
     if filereadable(expand("~/.vimrc.local"))
