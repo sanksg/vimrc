@@ -156,7 +156,6 @@
     set viewoptions=folds,options,cursor,unix,slash " better unix / windows compatibility
     set virtualedit=onemore         " allow for cursor beyond last character
     set history=1000                " Store a ton of history (default is 20)
-    set nospell                     " spell checking on
     set hidden                      " allow buffer switching without saving
     set title                       " change the terminal's title
     "set visualbell                  " don't beep
@@ -208,6 +207,19 @@
         set statusline+=\ [%{getcwd()}]          " current dir
         set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
     endif
+
+    "Spell Check Settings
+    if has('spell')
+        " turn spelling off by default
+        set nospell
+        " toggle spelling with F4 key
+        map <F4> :set spell!<CR><Bar>:echo "Spell Check: " . strpart("OffOn", 3 * &spell, 3)<CR>
+        " they were using white on white
+        highlight PmenuSel ctermfg=black ctermbg=lightgray
+        " limit it to just the top 10 items
+        set sps=best,10
+    endif
+
 
     set backspace=indent,eol,start  " backspace for dummies
     set linespace=0                 " No extra spaces between rows
@@ -298,9 +310,11 @@
     "clearing highlighted search
     nmap <silent> <leader>/ :nohlsearch<CR>
 
-    "Create shortcut for turning spellcheck off
-    nmap <leader>sn :set nospell!<CR>
+        "This mapping allows you to replace a word with the contents of the paste
+    "buffer without changing the paste buffer itself.
+    nmap <silent> cp "_cw<C-R>"<Esc>
 
+    
     " Shortcuts
     " Change Working Directory to that of the current file
     cmap cwd lcd %:p:h
