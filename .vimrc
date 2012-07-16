@@ -187,7 +187,7 @@
 
     set cursorline                  " highlight current line
     
-    color molokai
+    color desert
 
     if has('cmdline_info')
         set ruler                   " show the ruler
@@ -561,9 +561,11 @@
         set guioptions-=T           " remove the toolbar
         set lines=40                " 40 lines of text instead of 24,
         if has("gui_gtk2")
-            set guifont=Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Consolas\ Regular\ 16,Courier\ New\ Regular\ 18
-        else
-            set guifont=Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Consolas\ Regular:h16,Courier\ New\ Regular:h18
+            set guifont=Consolas\ Regular\ 16,Andale\ Mono\ Regular\ 16,Menlo\ Regular\ 15,Courier\ New\ Regular\ 18
+        elseif has("gui_macvim")
+            set guifont=Consolas\ Regular:h16,Andale\ Mono\ Regular:h16,Menlo\ Regular:h15,Courier\ New\ Regular:h18
+        elseif has("gui_win32")
+            set guifont=Consolas:h11,Courier_New:h11:b
         endif
         if has('gui_macvim')
             set transparency=5          " Make the window slightly transparent
