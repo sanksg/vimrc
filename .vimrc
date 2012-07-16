@@ -121,6 +121,7 @@
         if count(g:spf13_bundle_groups, 'html')
             Bundle 'HTML-AutoCloseTag'
             Bundle 'ChrisYip/Better-CSS-Syntax-for-Vim'
+            Bundle 'mattn/zencoding-vim'
         endif
 
     " Ruby
@@ -186,7 +187,7 @@
     set showmode                    " display the current mode
 
     set cursorline                  " highlight current line
-
+    
     color molokai
 
     if has('cmdline_info')
