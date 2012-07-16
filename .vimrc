@@ -565,11 +565,11 @@
 " }
 
 "Color Scheme {
-if has("gui_win32")
-    colorscheme desert
-else
-    colorscheme molokai
-endif
+    if has("gui_win32")
+        colorscheme desert
+    else
+        colorscheme desert
+    endif
 "}
 
 "Spell Check Settings
@@ -651,3 +651,4 @@ endfunction
         endif
     endif
 " }
+"
