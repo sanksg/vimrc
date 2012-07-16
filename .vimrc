@@ -268,6 +268,7 @@
     " Making it so ; works like : for commands. Saves typing and eliminates :W style typos due to lazy holding shift.
     nnoremap ; :
 
+    "Tabs and Windows
     " Easier moving in tabs and windows
     map <C-J> <C-W>j<C-W>_
     map <C-K> <C-W>k<C-W>_
@@ -275,6 +276,9 @@
     map <C-H> <C-W>h<C-W>_
     "Use F5 to maximize current window without closing other windows
     map <F5> <C-W>_<C-W><Bar>
+    " Switch to alternate file
+    map <C-Tab> :bnext<CR>
+    map <C-S-Tab> :bprevious<CR>
 
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
