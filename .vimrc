@@ -254,28 +254,32 @@
     " Making it so ; works like : for commands. Saves typing and eliminates :W style typos due to lazy holding shift.
     nnoremap ; :
 
-    "Tabs and Windows
-    " Easier moving in tabs and windows
+    " Easier moving between windows
     map <C-J> <C-W>j<C-W>_
     map <C-K> <C-W>k<C-W>_
     map <C-L> <C-W>l<C-W>_
     map <C-H> <C-W>h<C-W>_
-    set wmh=0
+
     "Use F5 to maximize current window without closing other windows
     map <F5> <C-W>_<C-W><Bar>
-    "" Switch to alternate file
+
+    " Switch buffers in the same window
     map <Leader>l :bnext<CR>
     map <Leader>h :bprevious<CR>
+
+    " This sets the minimum window height to 0. Vim will only display the filename instead of the current
+    " line of the minimized window.
+    set wmh=0
+
+    " The following two lines conflict with moving to top and bottom of the
+    " screen. If you prefer that functionality, comment them out.
+    map <S-H> gT
+    map <S-L> gt
 
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
     nnoremap k gk
 
-    " The following two lines conflict with moving to top and bottom of the
-    " screen
-    " If you prefer that functionality, comment them out.
-    map <S-H> gT
-    map <S-L> gt
     " Stupid shift key fixes
     cmap W w
     cmap WQ wq
