@@ -277,8 +277,8 @@
     "Use F5 to maximize current window without closing other windows
     map <F5> <C-W>_<C-W><Bar>
     " Switch to alternate file
-    map <C-Tab> :bnext<CR>
-    map <C-S-Tab> :bprevious<CR>
+    map <C-S-L> :bnext<CR>
+    map <C-S-H> :bprevious<CR>
 
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
