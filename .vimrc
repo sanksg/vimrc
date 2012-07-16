@@ -156,7 +156,7 @@
     set viewoptions=folds,options,cursor,unix,slash " better unix / windows compatibility
     set virtualedit=onemore         " allow for cursor beyond last character
     set history=1000                " Store a ton of history (default is 20)
-    set spell                       " spell checking on
+    set nospell                     " spell checking on
     set hidden                      " allow buffer switching without saving
     set title                       " change the terminal's title
     "set visualbell                  " don't beep
@@ -297,6 +297,9 @@
 
     "clearing highlighted search
     nmap <silent> <leader>/ :nohlsearch<CR>
+
+    "Create shortcut for turning spellcheck off
+    nmap <leader>sn :set nospell!<CR>
 
     " Shortcuts
     " Change Working Directory to that of the current file
