@@ -274,11 +274,12 @@
     map <C-K> <C-W>k<C-W>_
     map <C-L> <C-W>l<C-W>_
     map <C-H> <C-W>h<C-W>_
+    set wmh=0
     "Use F5 to maximize current window without closing other windows
     map <F5> <C-W>_<C-W><Bar>
-    " Switch to alternate file
-    map <C-S-L> :bnext<CR>
-    map <C-S-H> :bprevious<CR>
+    "" Switch to alternate file
+    map <Leader>l :bnext<CR>
+    map <Leader>h :bprevious<CR>
 
     " Wrapped lines goes down/up to next row, rather than next line in file.
     nnoremap j gj
