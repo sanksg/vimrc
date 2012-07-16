@@ -187,8 +187,6 @@
 
     set cursorline                  " highlight current line
     
-    color desert
-
     if has('cmdline_info')
         set ruler                   " show the ruler
         set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
@@ -206,18 +204,6 @@
         set statusline+=\ [%{&ff}/%Y]            " filetype
         set statusline+=\ [%{getcwd()}]          " current dir
         set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-    endif
-
-    "Spell Check Settings
-    if has('spell')
-        " turn spelling off by default
-        set nospell
-        " toggle spelling with F4 key
-        map <F4> :set spell!<CR><Bar>:echo "Spell Check: " . strpart("OffOn", 3 * &spell, 3)<CR>
-        " they were using white on white
-        highlight PmenuSel ctermfg=black ctermbg=lightgray
-        " limit it to just the top 10 items
-        set sps=best,10
     endif
 
 
@@ -579,6 +565,34 @@
     endif
 " }
 
+"Color Scheme {
+    if has("gui_win32")
+        colorscheme desert
+    else
+        colorscheme desert
+    endif
+"}
+
+"Spell Check Settings
+if has('spell')
+    " turn spelling off by default
+    set nospell
+    " toggle spelling with F4 key
+    map <F4> :set spell!<CR><Bar>:echo "Spell Check: " . strpart("OffOn", 3 * &spell, 3)<CR>
+    " they were using white on white
+    highlight PmenuSel ctermfg=black ctermbg=lightgray
+    " limit it to just the top 10 items
+    set sps=best,10
+    
+    highlight clear SpellBad
+    highlight SpellBad cterm=underline ctermfg=brown
+    highlight clear SpellRare
+    highlight SpellRare cterm=underline ctermfg=yellow
+    highlight clear SpellCap
+    highlight SpellCap cterm=underline ctermfg=yellow
+endif
+
+
  " Functions {
 
 function! InitializeDirectories()
@@ -638,3 +652,4 @@ endfunction
         endif
     endif
 " }
+"
