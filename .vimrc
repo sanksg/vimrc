@@ -85,12 +85,12 @@
         if count(g:spf13_bundle_groups, 'programming')
             " Pick one of the checksyntax, jslint, or syntastic
             Bundle 'scrooloose/syntastic'
-            "Bundle 'garbas/vim-snipmate'
-            "Bundle 'spf13/snipmate-snippets'
+            Bundle 'garbas/vim-snipmate'
+            Bundle 'spf13/snipmate-snippets'
             " Source support_function.vim to support snipmate-snippets.
-            "if filereadable(expand("~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim"))
-                "source ~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim
-            "endif
+            if filereadable(expand("~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim"))
+                source ~/.vim/bundle/snipmate-snippets/snippets/support_functions.vim
+            endif
 
             Bundle 'tpope/vim-fugitive'
             Bundle 'scrooloose/nerdcommenter'
@@ -99,7 +99,6 @@
                 Bundle 'majutsushi/tagbar'
             endif
             Bundle 'Shougo/neocomplcache'
-            Bundle 'Shougo/neocomplcache-snippets-complete'
         endif
 
     " Python
@@ -116,7 +115,6 @@
             Bundle 'leshill/vim-json'
             Bundle 'groenewege/vim-less'
             Bundle 'taxilian/vim-web-indent'
-            Bundle 'vim-scripts/JavaScript-Indent'
         endif
 
     " HTML
@@ -146,9 +144,6 @@
     if !has('gui')
         "set term=$TERM          " Make arrow and other keys work
     endif
-
-    "Misc Options"
-    set syn=auto 
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " syntax highlighting
     set mouse=a                 " automatically enable mouse usage
@@ -232,12 +227,12 @@
     set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
     
     set timeout timeoutlen=1000 ttimeoutlen=100 "Timeout setting for the slight delay between Esc key and mode switch
+    
+
 " }
 
 " Formatting {
     set nowrap                      " wrap long lines
-    "set cindent
-    set smartindent
     set autoindent                  " indent at the same level of the previous line
     set shiftwidth=4                " use indents of 4 spaces
     set expandtab                   " tabs are spaces, not tabs
@@ -258,10 +253,6 @@
 
     " Making it so ; works like : for commands. Saves typing and eliminates :W style typos due to lazy holding shift.
     nnoremap ; :
-    
-    "Ctrl-Return will do a smart aut indent"
-    "imap <C-Return> <CR><CR><C-o>k<Tab>
-    imap <C-Return> <CR><CR><C-o>k<C-t>
 
     " Easier moving between windows
     map <C-J> <C-W>j
@@ -582,7 +573,7 @@
     if has("gui_win32")
         colorscheme desert
     else
-        colorscheme desert
+        colorscheme molokai
     endif
 "}
 
