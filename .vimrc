@@ -99,6 +99,7 @@
                 Bundle 'majutsushi/tagbar'
             endif
             Bundle 'Shougo/neocomplcache'
+            Bundle 'Shougo/neocomplcache-snippets-complete'
         endif
 
     " Python
@@ -115,6 +116,7 @@
             Bundle 'leshill/vim-json'
             Bundle 'groenewege/vim-less'
             Bundle 'taxilian/vim-web-indent'
+            Bundle 'vim-scripts/JavaScript-Indent'
         endif
 
     " HTML
@@ -144,6 +146,9 @@
     if !has('gui')
         "set term=$TERM          " Make arrow and other keys work
     endif
+
+    "Misc Options"
+    set syn=auto 
     filetype plugin indent on   " Automatically detect file types.
     syntax on                   " syntax highlighting
     set mouse=a                 " automatically enable mouse usage
@@ -227,12 +232,12 @@
     set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
     
     set timeout timeoutlen=1000 ttimeoutlen=100 "Timeout setting for the slight delay between Esc key and mode switch
-    
-
 " }
 
 " Formatting {
     set nowrap                      " wrap long lines
+    "set cindent
+    set smartindent
     set autoindent                  " indent at the same level of the previous line
     set shiftwidth=4                " use indents of 4 spaces
     set expandtab                   " tabs are spaces, not tabs
@@ -253,6 +258,10 @@
 
     " Making it so ; works like : for commands. Saves typing and eliminates :W style typos due to lazy holding shift.
     nnoremap ; :
+
+    "Ctrl-Return will do a smart aut indent"
+    "imap <C-Return> <CR><CR><C-o>k<Tab>
+    imap <C-Return> <CR><CR><C-o>k<C-t>
 
     " Easier moving between windows
     map <C-J> <C-W>j
@@ -305,11 +314,10 @@
     "clearing highlighted search
     nmap <silent> <leader>/ :nohlsearch<CR>
 
-        "This mapping allows you to replace a word with the contents of the paste
+    "This mapping allows you to replace a word with the contents of the paste
     "buffer without changing the paste buffer itself.
     nmap <silent> cp "_cw<C-R>"<Esc>
 
-    
     " Shortcuts
     " Change Working Directory to that of the current file
     cmap cwd lcd %:p:h
@@ -373,6 +381,17 @@
         inoremap <expr> <C-d>      pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
         inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
 
+        " Remap OmniComplete keys to avoid conflict with SnipMate"
+        " omnicompletion : words
+        inoremap <leader>, <C-x><C-o>
+        " omnicompletion : filenames
+        inoremap <leader>: <C-x><C-f>
+        " omnicompletion : lines
+        inoremap <leader>= <C-x><C-l> 
+
+        "Autoclose"
+        imap ,/ </<C-X><C-O>
+
         " automatically open and close the popup menu / preview window
         au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
         set completeopt=menu,preview,longest
@@ -386,11 +405,6 @@
         " Make it so AutoCloseTag works for xml and xhtml files as well
         au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
         nmap <Leader>ac <Plug>ToggleAutoCloseMappings
-    " }
-
-    " SnipMate {
-        " Setting the author var
-        " If forking, please overwrite in your .vimrc.local file
     " }
 
     " NerdTree {
@@ -408,34 +422,31 @@
     " }
 
     "Tabularize {
-        if exists(":Tabularize")
-          nmap <Leader>a= :Tabularize /=<CR>
-          vmap <Leader>a= :Tabularize /=<CR>
-          nmap <Leader>a: :Tabularize /:<CR>
-          vmap <Leader>a: :Tabularize /:<CR>
-          nmap <Leader>a:: :Tabularize /:\zs<CR>
-          vmap <Leader>a:: :Tabularize /:\zs<CR>
-          nmap <Leader>a, :Tabularize /,<CR>
-          vmap <Leader>a, :Tabularize /,<CR>
-          nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
-          vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+        nmap <Leader>a= :Tabularize /=<CR>
+        vmap <Leader>a= :Tabularize /=<CR>
+        nmap <Leader>a: :Tabularize /:<CR>
+        vmap <Leader>a: :Tabularize /:<CR>
+        nmap <Leader>a:: :Tabularize /:\zs<CR>
+        vmap <Leader>a:: :Tabularize /:\zs<CR>
+        nmap <Leader>a, :Tabularize /,<CR>
+        vmap <Leader>a, :Tabularize /,<CR>
+        nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+        vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 
-          " The following function automatically aligns when typing a
-          " supported character
-          inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+        " The following function automatically aligns when typing a
+        " supported character
+        inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
 
-          function! s:align()
-              let p = '^\s*|\s.*\s|\s*$'
-              if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-                  let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-                  let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-                  Tabularize/|/l1
-                  normal! 0
-                  call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-              endif
-          endfunction
-
-        endif
+        function! s:align()
+          let p = '^\s*|\s.*\s|\s*$'
+          if getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+              let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+              let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+              Tabularize/|/l1
+              normal! 0
+              call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+          endif
+        endfunction
      " }
 
      " Session List {
@@ -497,7 +508,7 @@
         let g:neocomplcache_enable_auto_select = 0
 
         " SuperTab like snippets behavior.
-        "imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
+        imap <expr><TAB> neocomplcache#sources#snippets_complete#expandable() ? "\<Plug>(neocomplcache_snippets_expand)" : pumvisible() ? "\<C-n>" : "\<TAB>"
 
         " Plugin key-mappings.
         imap <C-k>     <Plug>(neocomplcache_snippets_expand)
@@ -573,7 +584,7 @@
     if has("gui_win32")
         colorscheme desert
     else
-        colorscheme molokai
+        colorscheme desert
     endif
 "}
 
