@@ -115,8 +115,9 @@
         if count(g:spf13_bundle_groups, 'javascript')
             Bundle 'leshill/vim-json'
             Bundle 'groenewege/vim-less'
-            Bundle 'taxilian/vim-web-indent'
-            Bundle 'vim-scripts/JavaScript-Indent'
+            "Bundle 'taxilian/vim-web-indent'
+            Bundle 'lukaszb / vim-web-indent'
+            "Bundle 'vim-scripts/JavaScript-Indent'
         endif
 
     " HTML
@@ -465,6 +466,7 @@
 
      " PyMode {
         let g:pymode_lint_checker = "pyflakes"
+        let g:pymode_doc = 1
      " }
 
      " ctrlp {
