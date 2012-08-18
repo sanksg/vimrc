@@ -157,15 +157,15 @@
     autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | lcd %:p:h | endif
     " always switch to the current file directory.
 
-    " set autowrite                  " automatically write a file when leaving a modified buffer
-    set shortmess+=filmnrxoOtT      " abbrev. of messages (avoids 'hit enter')
+    " set autowrite                                 " automatically write a file when leaving a modified buffer
+    set shortmess+=filmnrxoOtT                      " abbrev. of messages (avoids 'hit enter')
     set viewoptions=folds,options,cursor,unix,slash " better unix / windows compatibility
-    set virtualedit=onemore         " allow for cursor beyond last character
-    set history=1000                " Store a ton of history (default is 20)
-    set hidden                      " allow buffer switching without saving
-    set title                       " change the terminal's title
-    "set visualbell                  " don't beep
-    set noerrorbells                " don't beep
+    set virtualedit=onemore                         " allow for cursor beyond last character
+    set history=1000                                " Store a ton of history (default is 20)
+    set hidden                                      " allow buffer switching without saving
+    set title                                       " change the terminal's title
+    " set visualbell                                " don't beep
+    set noerrorbells                                " don't beep
 
     " Setting up the directories {
         set backup                      " backups are nice ...
@@ -192,7 +192,15 @@
     set showmode                    " display the current mode
 
     set cursorline                  " highlight current line
-    
+
+    " Change the cursor shapes in different modes for Gnome Terminal
+    if has("autocmd")
+        au InsertEnter * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape ibeam"
+        au InsertLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+        au VimLeave * silent execute "!gconftool-2 --type string --set /apps/gnome-terminal/profiles/Default/cursor_shape block"
+    endif
+
+
     if has('cmdline_info')
         set ruler                   " show the ruler
         set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
