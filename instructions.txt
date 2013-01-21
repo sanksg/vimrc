@@ -1,0 +1,6 @@
+1. Get SPF13
+2. Use the modified .vimrc file in this dir
+3. If installing on a new computer, the desertExExMod theme needs to be created. This can be done by:
+ - Once SPF13 install is complete, switch theme to desertEx by ":color desertEx"
+ - Run CSApproxSnapshot to take a snapshot of the theme and save it ./vim/colors
+ - Restart vim and make sure that it gets applied properly.
