@@ -65,7 +65,7 @@
 
     set background=dark          " Assume a dark background
     if !has('gui')
-        "set term=$TERM          " Make arrow and other keys work
+        set term=$TERM          " Make arrow and other keys work
     endif
     "Misc Options"
     set syn=auto 
@@ -95,8 +95,7 @@
     set viewoptions=folds,options,cursor,unix,slash " Better Unix / Windows compatibility
     set virtualedit=onemore             " Allow for cursor beyond last character
     set history=1000                    " Store a ton of history (default is 20)
-    set nospell                         " Spell checking on
-    set title                           " Change the window's title
+    "set title                           " Change the window's title
     set hidden                          " Allow buffer switching without saving
 
     " Setting up the directories {
@@ -429,7 +428,7 @@
     " }
 
     " ctrlp {
-        let g:ctrlp_working_path_mode = 2
+        let g:ctrlp_working_path_mode = 'c'
         nnoremap <silent> <D-t> :CtrlP<CR>
         nnoremap <silent> <D-r> :CtrlPMRU<CR>
         let g:ctrlp_custom_ignore = {
@@ -549,7 +548,7 @@
 
     " indent_guides {
         if !exists('g:spf13_no_indent_guides_autocolor')
-            let g:indent_guides_auto_colors = 0
+            let g:indent_guides_auto_colors = 1
         else
             " For some colorscheme, autocolor will not work, like 'desert', 'ir_black'.
             autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#212121   ctermbg=3
@@ -558,7 +557,7 @@
         set ts=4 sw=4 et
         let g:indent_guides_start_level = 2
         let g:indent_guides_guide_size = 1
-        let g:indent_guides_enable_on_vim_startup = 1
+        let g:indent_guides_enable_on_vim_startup = 0
     " }
 
 " }
