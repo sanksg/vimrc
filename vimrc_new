@@ -187,6 +187,9 @@
     autocmd FileType c,cpp,java,php,javascript,python,twig,xml,yml autocmd BufWritePre <buffer> call StripTrailingWhitespace()
     autocmd BufNewFile,BufRead *.html.twig set filetype=html.twig
 
+    "If file is a javascript or html file, change colorscheme to fruity
+    autocmd FileType javascript,html colorscheme fruityMod
+
 " }
 
 " Key (re)Mappings {
@@ -221,6 +224,8 @@
     " Switch buffers in the same window
     map <Leader>l :bnext<CR>
     map <Leader>h :bprevious<CR>
+    " Open all curent buffers in new tabs"
+    map <Leader>t :tab sball<CR>
 
     " This sets the minimum window height to 0. Vim will only display the filename instead of the current
     " line of the minimized window.
@@ -415,7 +420,8 @@
     " }
 
     " Buffer explorer {
-        nmap <leader>b :BufExplorer<CR>
+    " No longer installed in spf13
+        "nmap <leader>b :BufExplorer<CR>
     " }
 
     " JSON {
