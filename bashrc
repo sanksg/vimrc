@@ -58,7 +58,7 @@ fi
 function get_xserver ()
 {
     case $TERM in
-        xterm )
+        *xterm* )
             XSERVER=$(who am i | awk '{print $NF}' | tr -d ')''(' )
             # Ane-Pieter Wieringa suggests the following alternative:
             #  I_AM=$(who am i)
@@ -296,14 +296,14 @@ function job_color()
 # Now we construct the prompt.
 PROMPT_COMMAND="history -a"
 case ${TERM} in
-  *term | rxvt | linux)
+  *term* | rxvt | linux)
         PS1="\[\$(load_color)\][\A\[${NC}\] "
         # Time of day (with load info):
         PS1="\[\$(load_color)\][\A\[${NC}\] "
         # User@Host (with connection type info):
         PS1=${PS1}"\[${SU}\]\u\[${NC}\]@\[${CNX}\]\h\[${NC}\] "
         # PWD (with 'disk space' info):
-        PS1=${PS1}"\[\$(disk_color)\]\W]\[${NC}\] "
+        PS1=${PS1}"\[\$(disk_color)\]\w]\[${NC}\] "
         # Prompt (with 'job' info):
         PS1=${PS1}"\[\$(job_color)\]>\[${NC}\] "
         # Set title of current xterm:
