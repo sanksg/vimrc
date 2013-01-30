@@ -165,7 +165,11 @@ echo -e "${BCyan}This is BASH ${BRed}${BASH_VERSION%.*}${BCyan}\
 - DISPLAY on ${BRed}$DISPLAY${NC}\n"
 date
 if [ -x /usr/games/fortune ]; then
-    /usr/games/fortune -s     # Makes our day a bit more fun.... :-)
+    if [ -x /usr/games/cowsay ]; then
+        /usr/games/fortune -s | /usr/games/cowsay     # Makes our day a bit more fun.... :-)
+    else
+        /usr/games/fortune     # Makes our day a bit more fun.... :-)
+    fi
 fi
 
 function _exit()              # Function to run upon exit of shell.
