@@ -326,6 +326,9 @@
     map zl zL
     map zh zH
 
+    " In visual modem Ctrl+c copies to the system clipboard"
+    vmap <C-c> "+y
+
 " }
 
 
@@ -431,6 +434,20 @@
     " PyMode {
         let g:pymode_lint_checker = "pyflakes"
         let g:pymode_utils_whitespaces = 0
+
+        " Load show documentation plugin
+        let g:pymode_doc = 1
+
+        " Key for show python documentation
+        let g:pymode_doc_key = 'K'
+
+        " Skip errors and warnings
+        " W402 = Imported but not used
+        " W404 = from connection import * used; unable to detect undefined names
+        " W806 = Variable assigned but not used
+        "
+        let g:pymode_lint_ignore = "W402,W404,W806"
+
     " }
 
     " ctrlp {
